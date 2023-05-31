@@ -1,14 +1,25 @@
 import { prisma } from "@/db";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
+
+type UserProfile = {
+  id: string;
+  displayName: string;
+  about: string;
+  followers?: object[];
+  following?: object[];
+  posts?: object[];
+};
 
 export default async function UserProfile({ params }) {
   const user = await currentUser();
-  const profile = await prisma.user.findUnique({
+  const profile: UserProfile = await prisma.user.findUnique({
     where: { displayName: params.displayName },
   });
   return (
     <>
+      {/* Profile Details */}
       <div className="flex justify-center items-start gap-24">
         <Image
           className="rounded-full"
@@ -30,6 +41,12 @@ export default async function UserProfile({ params }) {
           <span>{profile.about}</span>
         </div>
       </div>
+      {/* Profile Posts */}
+      {profile.posts ? (
+        <ProfilePostGallery posts={profile.posts} />
+      ) : (
+        <NoPosts isCurrentUser={user.id === profile.id} />
+      )}
     </>
   );
 }
@@ -39,5 +56,44 @@ function EditProfileButton() {
     <button className="px-6 py-2 bg-gray-100 text-black font-semibold rounded-lg text-sm hover:bg-gray-300 transition-all">
       Edit Profile
     </button>
+  );
+}
+
+function ProfilePostGallery({ posts }) {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-5">
+      {/* TODO: Implement styles and post functionality */}
+      {posts.map((post) => (
+        <div>{JSON.stringify(post)}</div>
+      ))}
+    </div>
+  );
+}
+
+function NoPosts({ isCurrentUser }) {
+  return (
+    <div className="mt-32 flex flex-col items-center gap-4">
+      {isCurrentUser ? (
+        <>
+          <h3 className="text-3xl font-black">Share Photos</h3>
+          <p className="text-sm font-light">
+            When you share photos, they will appear on your profile.
+          </p>
+          <Link
+            href="#"
+            className="text-blue-500 hover:text-slate-100 text-sm font-semibold"
+          >
+            Share your first photo
+          </Link>
+        </>
+      ) : (
+        <>
+          <h3 className="text-3xl font-black">No photos</h3>
+          <p className="text-sm font-light">
+            It looks like this user hasn't posted anything yet.
+          </p>
+        </>
+      )}
+    </div>
   );
 }
