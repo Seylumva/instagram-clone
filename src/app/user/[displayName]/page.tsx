@@ -18,6 +18,9 @@ export default async function UserProfile({ params }) {
     where: { displayName: params.displayName },
     include: {
       posts: {
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           images: true,
         },
