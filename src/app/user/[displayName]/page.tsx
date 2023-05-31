@@ -64,7 +64,7 @@ function ProfilePostGallery({ posts }) {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-5">
       {/* TODO: Implement styles and post functionality */}
       {posts.map((post) => (
-        <div>{JSON.stringify(post)}</div>
+        <div key={post.id}>{JSON.stringify(post)}</div>
       ))}
     </div>
   );
