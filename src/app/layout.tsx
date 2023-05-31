@@ -5,6 +5,7 @@ import {
   SignOutButton,
   SignedIn,
   SignedOut,
+  currentUser,
 } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -41,12 +42,13 @@ function AppHeader() {
       <span>Instagram Clone</span>
       <nav>
         <ul className="flex gap-5">
-          <Link href="/">Home</Link>
           <SignedIn>
+            <Link href="/get-started">Profile</Link>
             <SignOutButton />
             <Link href="/create">Create</Link>
           </SignedIn>
           <SignedOut>
+            <Link href="/">Home</Link>
             <SignInButton mode="modal" redirectUrl="/get-started" />
           </SignedOut>
         </ul>

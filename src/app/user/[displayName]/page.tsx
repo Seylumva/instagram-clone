@@ -80,6 +80,7 @@ function ProfilePostGallery({ posts }) {
             alt=""
             fill
             style={{ objectFit: "cover" }}
+            draggable={false}
           />
         </Link>
       ))}
