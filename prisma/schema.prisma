@@ -32,9 +32,9 @@ model Post {
 }
 
 model User {
-  id          String @unique
-  displayName String @unique
-  about       String
+  id          String  @unique
+  displayName String  @unique
+  about       String?
 
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
