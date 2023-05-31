@@ -39,7 +39,6 @@ export default function GetStarted() {
             id="displayName"
           />
         </div>
-
         <button className="py-3 bg-slate-700 text-slate-100 text-sm hover:bg-slate-800 transition-all rounded-md">
           Create Profile
         </button>

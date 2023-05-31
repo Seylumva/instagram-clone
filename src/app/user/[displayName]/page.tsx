@@ -16,11 +16,14 @@ export default async function UserProfile({ params }) {
   const user = await currentUser();
   const profile: UserProfile = await prisma.user.findUnique({
     where: { displayName: params.displayName },
+    include: {
+      posts: true,
+    },
   });
   return (
     <>
       {/* Profile Details */}
-      <div className="flex justify-center items-start gap-24">
+      <div className="flex justify-center items-start gap-10 md:gap-24">
         <Image
           className="rounded-full"
           src="/defaultpfp.jpg"
@@ -30,7 +33,7 @@ export default async function UserProfile({ params }) {
         />
         <div className="flex flex-col gap-6">
           <div className="flex gap-8 items-center">
-            <span className="text-lg">{profile.displayName}</span>
+            <span className="text-md md:text-lg">{profile.displayName}</span>
             {user.id === profile.id ? <EditProfileButton /> : null}
           </div>
           <div className="flex gap-12 items-center text-sm">
@@ -42,7 +45,7 @@ export default async function UserProfile({ params }) {
         </div>
       </div>
       {/* Profile Posts */}
-      {profile.posts ? (
+      {profile.posts.length ? (
         <ProfilePostGallery posts={profile.posts} />
       ) : (
         <NoPosts isCurrentUser={user.id === profile.id} />
@@ -61,10 +64,12 @@ function EditProfileButton() {
 
 function ProfilePostGallery({ posts }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-5">
+    <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-5">
       {/* TODO: Implement styles and post functionality */}
       {posts.map((post) => (
-        <div key={post.id}>{JSON.stringify(post)}</div>
+        <div key={post.id} className="aspect-square bg-slate-600">
+          {post.caption}
+        </div>
       ))}
     </div>
   );
@@ -80,7 +85,7 @@ function NoPosts({ isCurrentUser }) {
             When you share photos, they will appear on your profile.
           </p>
           <Link
-            href="#"
+            href="/create"
             className="text-blue-500 hover:text-slate-100 text-sm font-semibold"
           >
             Share your first photo

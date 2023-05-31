@@ -26,7 +26,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AppHeader />
-          <main className="container mx-auto py-10">{children}</main>
+          <main className="container mx-auto py-10 px-4 md:px-0">
+            {children}
+          </main>
         </body>
       </html>
     </ClerkProvider>
@@ -35,13 +37,14 @@ export default function RootLayout({
 
 function AppHeader() {
   return (
-    <header className="container mx-auto flex items-center justify-between py-5">
+    <header className="px-4 md:px-0 container mx-auto flex items-center justify-between py-5">
       <span>Instagram Clone</span>
       <nav>
         <ul className="flex gap-5">
           <Link href="/">Home</Link>
           <SignedIn>
             <SignOutButton />
+            <Link href="/create">Create</Link>
           </SignedIn>
           <SignedOut>
             <SignInButton mode="modal" redirectUrl="/get-started" />
