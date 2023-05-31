@@ -70,7 +70,11 @@ function ProfilePostGallery({ posts }) {
   return (
     <div className="mx-auto mt-16 grid max-w-screen-md grid-cols-2 gap-5 md:grid-cols-3">
       {posts.map((post) => (
-        <Link href={`/post/${post.id}`} className="relative aspect-square">
+        <Link
+          key={post.id}
+          href={`/post/${post.id}`}
+          className="relative aspect-square"
+        >
           <Image
             src={post.images[0].imageUrl}
             alt=""
