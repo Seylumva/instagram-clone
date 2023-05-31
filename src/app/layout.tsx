@@ -26,7 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AppHeader />
-          <main className="container mx-auto py-10 px-4 md:px-0">
+          <main className="container mx-auto px-4 py-10 md:px-0">
             {children}
           </main>
         </body>
@@ -37,7 +37,7 @@ export default function RootLayout({
 
 function AppHeader() {
   return (
-    <header className="px-4 md:px-0 container mx-auto flex items-center justify-between py-5">
+    <header className="container mx-auto flex items-center justify-between px-4 py-5 md:px-0">
       <span>Instagram Clone</span>
       <nav>
         <ul className="flex gap-5">

@@ -1,20 +1,32 @@
 "use server";
 import { prisma } from "@/db";
-import { redirect } from "next/navigation";
 
-export async function createPost(caption: string, userId: string) {
+type FormData = {
+  caption: string;
+  files: any;
+  userId: string;
+};
+
+export async function createPost(formData: FormData) {
   const profile = await prisma.user.findUnique({
-    where: {
-      id: userId,
+    where: { id: formData.userId },
+  });
+
+  const newPost = await prisma.post.create({
+    data: {
+      authorId: profile.id,
+      caption: formData.caption,
     },
   });
 
-  await prisma.post.create({
-    data: {
-      authorId: userId,
-      caption: caption,
-    },
-  });
+  for (let file of formData.files) {
+    const newImage = await prisma.image.create({
+      data: {
+        imageUrl: file,
+        postId: newPost.id,
+      },
+    });
+  }
 
   return profile.displayName;
 }

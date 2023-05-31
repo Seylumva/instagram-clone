@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Image {
-  id       String @id
+  id       Int    @id @default(autoincrement())
   imageUrl String
   postId   String
   post     Post   @relation(fields: postId, references: [id])
