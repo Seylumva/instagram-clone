@@ -4,7 +4,7 @@
 
 Made with Next.js 13 experimental server actions, Cloudinary for file hosting, Clerk for authentication, PlanetScale for a cloud database and Prisma for an ORM.
 
-####[Live Deployment](https://instagram-clone-seylumva.vercel.app/)
+[Live Vercel Deployment](https://instagram-clone-seylumva.vercel.app/)
 
 ## Self-host
 
