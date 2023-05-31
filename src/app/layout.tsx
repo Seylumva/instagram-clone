@@ -44,7 +44,7 @@ function AppHeader() {
             <SignOutButton />
           </SignedIn>
           <SignedOut>
-            <SignInButton redirectUrl="/get-started" />
+            <SignInButton mode="modal" redirectUrl="/get-started" />
           </SignedOut>
         </ul>
       </nav>
