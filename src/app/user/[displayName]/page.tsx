@@ -2,6 +2,7 @@ import { prisma } from "@/db";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type UserProfile = {
   id: string;
@@ -29,6 +30,10 @@ export default async function UserProfile({ params }) {
       },
     },
   });
+
+  if (!profile) {
+    notFound();
+  }
 
   return (
     <>

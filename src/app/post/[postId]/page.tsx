@@ -2,6 +2,7 @@ import { prisma } from "@/db";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function SinglePostPage({ params }) {
   const { postId } = params;
@@ -12,6 +13,10 @@ export default async function SinglePostPage({ params }) {
       author: true,
     },
   });
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <div className="align-start mx-auto flex h-[900px] max-w-[1200px] flex-col border border-zinc-700 md:flex-row md:justify-between">
