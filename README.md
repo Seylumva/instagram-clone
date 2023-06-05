@@ -30,7 +30,7 @@ Required environment variables:
 
 ## Prisma Set-Up
 
-Before your database is able to be written to and read from, you have to run the `npx prisma db push` command to sync your Prisma schema to your database tables.
+Before your database is able to be written to and read from, you have to run `npx prisma generate` to generate the Prisma client and `npx prisma db push` command to sync your Prisma schema to your database tables.
 
 ## Running locally
 
