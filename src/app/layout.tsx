@@ -47,7 +47,9 @@ async function AppHeader() {
         <ul className="flex items-center gap-5">
           <SignedIn>
             <Link href="/create">Create</Link>
-            <Link href={`/user/${user.username}`}>{user && user.username}</Link>
+            <Link href={user && `/user/${user.username}`}>
+              {user && user.username}
+            </Link>
             <UserButton />
           </SignedIn>
           <SignedOut>
