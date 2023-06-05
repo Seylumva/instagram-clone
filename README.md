@@ -2,7 +2,7 @@
 
 ## Stack
 
-Made with Next.js 13, experimental server actions, Cloudinary for file hosting, Clerk for authentication, PlanetScale for a cloud database and Prisma for an ORM.
+Made with Next.js 13, experimental server actions, Cloudinary for file hosting, Clerk for authentication, Webhooks for synchronizing database to Clerk's user objects, PlanetScale for a cloud database and Prisma for an ORM.
 
 [Live Vercel Deployment](https://instagram-clone-seylumva.vercel.app/)
 
@@ -16,6 +16,7 @@ Required environment variables:
 
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
 - `CLERK_SECRET_KEY`
+- `WEBHOOK_SECRET`
 
 #### Cloudinary
 
