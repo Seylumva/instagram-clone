@@ -2,7 +2,6 @@ import "./globals.css";
 import {
   ClerkProvider,
   SignInButton,
-  SignOutButton,
   SignedIn,
   SignedOut,
   UserButton,
@@ -10,6 +9,8 @@ import {
 } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { dark } from "@clerk/themes";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -23,7 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <html lang="en">
         <body className={inter.className}>
           {/* @ts-expect-error Server Component */}

@@ -37,23 +37,57 @@ export default async function UserProfile({ params }) {
 
   return (
     <>
-      <div className="flex items-start justify-center gap-10 md:gap-24">
-        <Image
-          className="rounded-full"
-          src={profile.profileImageUrl}
-          alt={profile.username}
-          width={150}
-          height={150}
-        />
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-8">
-            <span className="text-md md:text-lg">{profile.username}</span>
-            {user.username === profile.username && <EditProfileButton />}
+      <div className="mx-auto flex w-full max-w-[975px] flex-wrap items-center justify-start gap-6 sm:justify-center sm:gap-4 sm:border-b sm:border-zinc-700 sm:pb-12">
+        {/* Image */}
+        <div className="relative aspect-square w-24 sm:w-44">
+          <Image
+            className="rounded-full"
+            src={profile.profileImageUrl}
+            alt={profile.username}
+            fill={true}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        {/* Name & Button */}
+        <div className="flex h-fit grow flex-col items-start gap-4 sm:w-4/6 sm:grow-0 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2 sm:px-12 sm:pt-4 md:w-3/6">
+          <span className="mr-6 text-lg">{profile.username}</span>
+          {user.username === profile.username ? (
+            <WhiteButton>Edit Profile</WhiteButton>
+          ) : (
+            <div className="flex gap-2">
+              <BlueButton>Follow</BlueButton>
+              <WhiteButton>Message</WhiteButton>
+            </div>
+          )}
+          <ul className="mt-4 hidden w-full gap-8 sm:flex">
+            <div className="text-slate-300">
+              <span className="pr-1 font-bold text-white">
+                {profile.posts.length}
+              </span>{" "}
+              posts
+            </div>
+            <div className="text-slate-300">
+              <span className="pr-1 font-bold text-white">0</span> followers
+            </div>
+            <div className="text-slate-300">
+              <span className="pr-1 font-bold text-white">0</span> following
+            </div>
+          </ul>
+          <div className="mt-4 hidden text-sm sm:block">{profile.about}</div>
+        </div>
+        {/* About */}
+        <div className="text-sm sm:hidden">{profile.about}</div>
+        {/* Stats */}
+        <div className="flex w-full justify-center gap-16 border-y border-zinc-900 py-3 text-sm sm:order-3 sm:hidden">
+          <div className="flex flex-col items-center font-light text-slate-300">
+            <span className="font-bold text-white">{profile.posts.length}</span>{" "}
+            posts
           </div>
-          <div className="flex items-center gap-12 text-sm">
-            <span>{profile.posts.length} posts</span>
-            <span>0 followers</span>
-            <span>0 following</span>
+          <div className="flex flex-col items-center font-light text-slate-300">
+            <span className="font-bold text-white">0</span> followers
+          </div>
+          <div className="flex flex-col items-center font-light text-slate-300">
+            <span className="font-bold text-white">0</span> following
           </div>
         </div>
       </div>
@@ -69,7 +103,7 @@ export default async function UserProfile({ params }) {
 
 function ProfilePostGallery({ posts }) {
   return (
-    <div className="mx-auto mt-16 grid max-w-screen-md grid-cols-2 gap-5 md:grid-cols-3">
+    <div className="mx-auto mt-16 grid max-w-[975px] grid-cols-2 gap-5 md:grid-cols-3">
       {posts.map((post) => (
         <Link
           key={post.id}
@@ -93,10 +127,18 @@ function ProfilePostGallery({ posts }) {
   );
 }
 
-function EditProfileButton() {
+function WhiteButton({ children }) {
   return (
-    <button className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-semibold text-black transition-all hover:bg-gray-300">
-      Edit Profile
+    <button className="rounded-lg bg-gray-100 px-4 py-2 text-xs font-semibold text-black transition-all hover:bg-gray-300">
+      {children}
+    </button>
+  );
+}
+
+function BlueButton({ children }) {
+  return (
+    <button className="rounded-lg bg-sky-600 px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-sky-700">
+      {children}
     </button>
   );
 }
