@@ -20,6 +20,9 @@ export default async function UserProfile({ params }) {
     },
     include: {
       posts: {
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           images: true,
         },
@@ -40,7 +43,7 @@ export default async function UserProfile({ params }) {
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-8">
             <span className="text-md md:text-lg">{profile.username}</span>
-            <EditProfileButton />
+            {user.username === profile.username && <EditProfileButton />}
           </div>
           <div className="flex items-center gap-12 text-sm">
             <span>{profile.posts.length} posts</span>
