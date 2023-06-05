@@ -14,58 +14,48 @@ type UserProfile = {
 
 export default async function UserProfile({ params }) {
   const user = await currentUser();
-  const profile: UserProfile = await prisma.user.findUnique({
-    where: { displayName: params.displayName },
+  const profile = await prisma.user.findUnique({
+    where: {
+      username: params.displayName,
+    },
     include: {
       posts: {
-        orderBy: {
-          createdAt: "desc",
-        },
         include: {
           images: true,
         },
       },
     },
   });
+
   return (
     <>
-      {/* Profile Details */}
       <div className="flex items-start justify-center gap-10 md:gap-24">
         <Image
           className="rounded-full"
-          src="/defaultpfp.jpg"
-          alt={profile.displayName}
+          src={profile.profileImageUrl}
+          alt={profile.username}
           width={150}
           height={150}
         />
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-8">
-            <span className="text-md md:text-lg">{profile.displayName}</span>
-            {user.id === profile.id ? <EditProfileButton /> : null}
+            <span className="text-md md:text-lg">{profile.username}</span>
+            <EditProfileButton />
           </div>
           <div className="flex items-center gap-12 text-sm">
             <span>{profile.posts.length} posts</span>
             <span>0 followers</span>
             <span>0 following</span>
           </div>
-          <span>{profile.about}</span>
         </div>
       </div>
       {/* Profile Posts */}
       {profile.posts.length ? (
         <ProfilePostGallery posts={profile.posts} />
       ) : (
-        <NoPosts isCurrentUser={user.id === profile.id} />
+        <NoPosts isCurrentUser={user.username === profile.username} />
       )}
     </>
-  );
-}
-
-function EditProfileButton() {
-  return (
-    <button className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-semibold text-black transition-all hover:bg-gray-300">
-      Edit Profile
-    </button>
   );
 }
 
@@ -79,7 +69,11 @@ function ProfilePostGallery({ posts }) {
           className="relative aspect-square"
         >
           <Image
-            src={post.images[0].imageUrl}
+            src={
+              post.images.length
+                ? post.images[0].imageUrl
+                : post.images.imageUrl
+            }
             alt=""
             fill
             style={{ objectFit: "cover" }}
@@ -88,6 +82,14 @@ function ProfilePostGallery({ posts }) {
         </Link>
       ))}
     </div>
+  );
+}
+
+function EditProfileButton() {
+  return (
+    <button className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-semibold text-black transition-all hover:bg-gray-300">
+      Edit Profile
+    </button>
   );
 }
 

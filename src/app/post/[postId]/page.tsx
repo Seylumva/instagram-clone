@@ -8,8 +8,8 @@ export default async function SinglePostPage({ params }) {
   const post = await prisma.post.findUnique({
     where: { id: postId },
     include: {
-      author: true,
       images: true,
+      author: true,
     },
   });
 
@@ -26,10 +26,17 @@ export default async function SinglePostPage({ params }) {
       <div className="border-bottom flex w-full flex-grow flex-col justify-start border-t border-zinc-700 md:w-1/3 md:border-l md:border-t-0">
         <div className="flex items-center border-b border-zinc-700 p-6">
           <Link
-            href={`/user/${post.author.displayName}`}
-            className=" lowercase text-gray-100 transition hover:text-gray-300"
+            href={`/user/${post.author.username}`}
+            className="flex items-center gap-2 lowercase text-gray-100 transition hover:text-gray-300"
           >
-            {post.author.displayName} ·
+            <Image
+              src={post.author.profileImageUrl}
+              alt={post.author.username}
+              width={35}
+              height={35}
+              className="rounded-full"
+            />
+            {post.author.username} ·
           </Link>
           <button
             type="button"
