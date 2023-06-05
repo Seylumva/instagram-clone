@@ -7,7 +7,7 @@ import { Prisma } from "@prisma/client";
 
 const webhookSecret: string = process.env.WEBHOOK_SECRET || "";
 
-export async function handler(req: Request) {
+export async function POST(req: Request) {
   const payload = await req.json();
   const headersList = headers();
   const svixHeaders = {
@@ -79,7 +79,3 @@ type Event = {
 };
 
 type EventType = "user.created" | "user.updated" | "user.deleted" | "*";
-
-export const GET = handler;
-export const POST = handler;
-export const PUT = handler;
