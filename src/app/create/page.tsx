@@ -9,6 +9,11 @@ import { createPost } from "../actions/createPost";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
+type UploadedImages = {
+  url: string;
+  publicId: string;
+};
+
 const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "";
 
 export default function CreateNewPostPage() {
@@ -43,7 +48,7 @@ export default function CreateNewPostPage() {
   const uploadListingPictures = async (images: File[]) => {
     try {
       const formData = new FormData();
-      const listingImages = [];
+      const listingImages: UploadedImages[] = [];
       for (let image of images) {
         formData.append("file", image);
         formData.append("upload_preset", UPLOAD_PRESET);

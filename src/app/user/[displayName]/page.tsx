@@ -31,7 +31,7 @@ export default async function UserProfile({ params }) {
     },
   });
 
-  if (!profile) {
+  if (!profile || !user) {
     notFound();
   }
 
