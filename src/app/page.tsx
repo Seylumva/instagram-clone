@@ -1,19 +1,25 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignInButton, currentUser } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+
   return (
     <>
-      <SignedIn>
-        Look's like you're logged in! Click{" "}
-        <Link className="font-semibold" href="/get-started">
-          here
-        </Link>{" "}
-        to get started!
-      </SignedIn>
-      <SignedOut>
-        If you're seeing this it means <b>you are not logged in</b>!
-      </SignedOut>
+      <div className="text-center">
+        <h1 className="mb-4 text-3xl">Welcome!</h1>
+        {user ? (
+          <p className="text-sm text-gray-100">
+            To see your profile,{" "}
+            <Link href={`/user/${user.username}`}>click here.</Link>
+          </p>
+        ) : (
+          <p className="text-sm text-gray-100">
+            To get started sharing pictures,{" "}
+            <SignInButton mode="modal">click here.</SignInButton>
+          </p>
+        )}
+      </div>
     </>
   );
 }

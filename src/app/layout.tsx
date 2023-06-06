@@ -51,18 +51,17 @@ async function AppHeader() {
       <nav>
         <ul className="flex items-center gap-5">
           <SignedIn>
-            <Link href="/create">Create</Link>
-            <Link href={user && `/user/${user.username}`}>
+            <Link href="/create" className="text-blue-500">
+              + New
+            </Link>
+            <Link href={user ? `/user/${user.username}` : ""}>
               {user && user.username}
             </Link>
             <UserButton />
           </SignedIn>
           <SignedOut>
             <Link href="/">Home</Link>
-            <SignInButton
-              mode="modal"
-              afterSignInUrl={user && `/user/${user.username}`}
-            />
+            <SignInButton mode="modal" />
           </SignedOut>
         </ul>
       </nav>
