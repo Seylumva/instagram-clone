@@ -20,11 +20,18 @@ Required environment variables:
 
 #### Cloudinary
 
+Used for client side requests
+
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
 - `NEXT_PUBLIC_CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
+
+Used for server side actions
+
+- `CLOUDINARY_URL` - <u>Format:</u> cloudinary://**api_secret**:**public_api_key**@**cloud_name** [See more](https://cloudinary.com/documentation/node_integration#setting_the_cloudinary_url_environment_variable)
 
 #### Database (PlanetScale)
+
+Inside `.env` (Unless you want to manage which file Prisma uses manually)
 
 - `DATABASE_URL`
 
@@ -41,3 +48,9 @@ Once you have set up all the necessary environment variables you can run `npm ru
 Remember to override Vercel's default `Build Command` on your project's settings
 
 The command should be set to `npx prisma generate && next build` or the build process will fail.
+
+## Known issues
+
+Cloudinary:
+
+- [Critical dependency: the request of a dependency is an expression](https://github.com/cloudinary/cloudinary_npm/issues/600)
