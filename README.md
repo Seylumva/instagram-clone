@@ -16,7 +16,7 @@ Required environment variables:
 
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
 - `CLERK_SECRET_KEY`
-- `WEBHOOK_SECRET`
+- `WEBHOOK_SECRET` - Set up Clerk webhook in dashboard to get a secret.
 
 #### Cloudinary
 
